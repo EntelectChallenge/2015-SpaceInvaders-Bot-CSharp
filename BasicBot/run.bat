@@ -1,0 +1,1 @@
+BasicBot.exe %1

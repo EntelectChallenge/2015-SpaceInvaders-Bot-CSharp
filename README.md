@@ -15,7 +15,7 @@ You will need to test that your project compiles from the command prompt as well
 Once you have a working Visual Studio Command Prompt simply start it, change to the project directory and run `compile.bat`.
 
 ## Run
-Once you have compiled you can do a basic test of the bot by simply launching a Command Prompt, changing to the bot directory and running `run.bat`. This will use the example state and map files in the output folder.
+Once you have compiled you can do a basic test of the bot by simply launching a Command Prompt, changing to the bot directory and running `run.bat BasicBot/output`. This will use the example state and map files in the `BasicBot/output` folder.
 
 ## NuGet
 If your bot depends on any libraries you can install them with the [NuGet Package Manager](https://docs.nuget.org/consume/installing-nuget).

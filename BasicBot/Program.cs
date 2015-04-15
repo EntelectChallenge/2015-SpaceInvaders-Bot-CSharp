@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using BasicBot.Properties;
 
 namespace BasicBot
@@ -21,10 +22,17 @@ namespace BasicBot
             if (args.Length != 1)
             {
                 PrintUsage();
-                return;
+                Environment.Exit(1);
             }
 
-            var outputPath = GetOutputPathFromArguments(args);
+            var outputPath = args[0];
+            if (!Directory.Exists(outputPath))
+            {
+                PrintUsage();
+                Console.WriteLine();
+                Console.WriteLine("Error: Output folder \"" + outputPath + "\" does not exist.");
+                Environment.Exit(1);
+            }
 
             var bot = new BasicBot(outputPath);
             bot.Execute();
@@ -35,17 +43,6 @@ namespace BasicBot
             Console.WriteLine("C# BasicBot usage: BasicBot.exe <outputFilename>");
             Console.WriteLine();
             Console.WriteLine("\toutputPath\tThe output folder where the match runner will output map and state files and look for the move file.");
-        }
-
-        private static string GetOutputPathFromArguments(string[] args)
-        {
-            if (!string.IsNullOrEmpty(args[0]))
-            {
-                return args[0];
-            }
-
-            Console.WriteLine("Invalid output filename default to: " + Settings.Default.OutputFile);
-            return Settings.Default.OutputFile;
         }
     }
 }

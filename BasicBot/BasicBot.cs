@@ -26,8 +26,8 @@ namespace BasicBot
             var map = LoadMap();
             Log(String.Format("Map:{0}{1}", Environment.NewLine, map));
 
-            var move = GetRandomMove();
-            SaveMove(move);
+            var shipCommand = GetRandomShipCommand();
+            SaveShipCommand(shipCommand);
         }
 
         private Match LoadState()
@@ -101,28 +101,29 @@ namespace BasicBot
             }
         }
 
-        private string GetRandomMove()
+        private ShipCommand GetRandomShipCommand()
         {
             var random = new Random();
-            var possibleMoves = Enum.GetValues(typeof (ShipCommand));
-            return possibleMoves.GetValue(random.Next(0, possibleMoves.Length)).ToString();
+            var possibleShipCommands = Enum.GetValues(typeof (ShipCommand));
+            return (ShipCommand) possibleShipCommands.GetValue(random.Next(0, possibleShipCommands.Length));
         }
 
-        private void SaveMove(string move)
+        private void SaveShipCommand(ShipCommand shipCommand)
         {
+            var shipCommandString = shipCommand.ToString();
             var filename = Path.Combine(OutputPath, Settings.Default.OutputFile);
             try
             {
                 using (var file = new StreamWriter(filename))
                 {
-                    file.WriteLine(move);
+                    file.WriteLine(shipCommandString);
                 }
 
-                Log("Move: " + move);
+                Log("Command: " + shipCommandString);
             }
             catch (IOException e)
             {
-                Log(String.Format("Unable to write move file: {0}", filename));
+                Log(String.Format("Unable to write command file: {0}", filename));
 
                 var trace = new StackTrace(e);
                 Log(String.Format("Stacktrace: {0}", trace));
